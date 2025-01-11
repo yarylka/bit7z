@@ -4,6 +4,7 @@
 /*
  * bit7z - A C++ static library to interface with the 7-zip shared libraries.
  * Copyright (c) 2014-2023 Riccardo Ostani - All Rights Reserved.
+ * Copyright (c) 2025 Valery Khadanionak - All Rights Reserved.
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -25,6 +26,7 @@
 #include "internal/fileextractcallback.hpp"
 #include "internal/fixedbufferextractcallback.hpp"
 #include "internal/streamextractcallback.hpp"
+#include "internal/outputterextractcallback.hpp"
 #include "internal/opencallback.hpp"
 #include "internal/stringutil.hpp"
 #include "internal/util.hpp"
@@ -354,6 +356,15 @@ void BitInputArchive::extractTo( std::map< tstring, std::vector< byte_t > >& out
 
     auto extractCallback = bit7z::make_com< BufferExtractCallback, ExtractCallback >( *this, outMap );
     extract_arc( mInArchive, filesIndices, extractCallback );
+}
+
+void BitInputArchive::extractTo( BitAbstractArchiveOutputter& outputter, const std::vector< uint32_t >& indices ) const {
+    if ( !indices.empty() ) {
+        auto extractCallback = bit7z::make_com< OutputterExtractCallback, ExtractCallback >( *this, outputter );
+        extract_arc( mInArchive, indices, extractCallback );
+    }
+
+    outputter.Terminate();
 }
 
 void BitInputArchive::test() const {

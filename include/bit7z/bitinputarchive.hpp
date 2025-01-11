@@ -1,6 +1,7 @@
 /*
  * bit7z - A C++ static library to interface with the 7-zip shared libraries.
  * Copyright (c) 2014-2023 Riccardo Ostani - All Rights Reserved.
+ * Copyright (c) 2025 Valery Khadanionak - All Rights Reserved.
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -16,6 +17,7 @@
 #include "bitarchiveitemoffset.hpp"
 #include "bitformat.hpp"
 #include "bitfs.hpp"
+#include "bitabstractarchiveoutputter.hpp"
 
 struct IInStream;
 struct IInArchive;
@@ -284,6 +286,15 @@ class BitInputArchive {
          * @param outMap   the output map.
          */
         void extractTo( std::map< tstring, std::vector< byte_t > >& outMap ) const;
+
+        /**
+         * @brief Extracts the specified items to the specified outputter.
+         *
+         * @param outputter the output object that accepts the extracted files.
+         * @param indices   the array of indices of the files in the archive that must be extracted.
+         * If the array is empty, then no files are extracted.
+         */
+        void extractTo( BitAbstractArchiveOutputter& outputter, const std::vector< uint32_t >& indices ) const;
 
         /**
          * @brief Tests the archive without extracting its content.
