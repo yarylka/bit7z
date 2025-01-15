@@ -39,14 +39,14 @@ namespace bit7z
         virtual auto GetOutput( uint32_t index, const tstring& path, BitAbstractArchiveOutput** ppOutput ) -> HRESULT = 0;
 
         /**
+        * @brief Set operation result for current archive output
+        */
+        virtual void FinishOperation( bool success ) = 0;
+
+        /**
         * @brief Release a pointer to the archive output obtained in a previous GetOutput call
         */
         virtual void ReleaseOutput() = 0;
-
-        /**
-         * @brief Need to call this method when all files have been extracted.
-         */
-        virtual void Terminate() = 0;
     };
 
 } // namespace bit7z

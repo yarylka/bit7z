@@ -363,8 +363,6 @@ void BitInputArchive::extractTo( BitAbstractArchiveOutputter& outputter, const s
         auto extractCallback = bit7z::make_com< OutputterExtractCallback, ExtractCallback >( *this, outputter );
         extract_arc( mInArchive, indices, extractCallback );
     }
-
-    outputter.Terminate();
 }
 
 void BitInputArchive::test() const {

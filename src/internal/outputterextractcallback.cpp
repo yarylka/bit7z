@@ -30,7 +30,18 @@ void OutputterExtractCallback::releaseStream() {
     m_outputter.ReleaseOutput();
 }
 
-auto OutputterExtractCallback::getOutStream(uint32_t index, ISequentialOutStream** outStream) -> HRESULT {
+auto OutputterExtractCallback::finishOperation( OperationResult operationResult ) -> HRESULT {
+    const HRESULT result = operationResult != OperationResult::Success ? E_FAIL : S_OK;
+    if (m_outMemStream == nullptr ) {
+        return result;
+    }
+
+    m_outputter.FinishOperation( result == S_OK );
+    releaseStream();
+    return result;
+}
+
+auto OutputterExtractCallback::getOutStream( uint32_t index, ISequentialOutStream** outStream ) -> HRESULT {
     if ( isItemFolder( index ) ) {
         return S_OK;
     }

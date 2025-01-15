@@ -34,6 +34,8 @@ class OutputterExtractCallback final : public ExtractCallback {
         BitAbstractArchiveOutputter& m_outputter;
         CMyComPtr< ISequentialOutStream > m_outMemStream;
 
+        auto finishOperation( OperationResult operationResult ) -> HRESULT override;
+
         void releaseStream() override;
 
         auto getOutStream( uint32_t index, ISequentialOutStream** outStream ) -> HRESULT override;
