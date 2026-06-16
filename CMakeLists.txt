@@ -22,6 +22,8 @@ set( PUBLIC_HEADERS
      include/bit7z/bitabstractarchivecreator.hpp
      include/bit7z/bitabstractarchivehandler.hpp
      include/bit7z/bitabstractarchiveopener.hpp
+     include/bit7z/bitabstractarchiveoutput.hpp
+     include/bit7z/bitabstractarchiveoutputter.hpp
      include/bit7z/bitarchiveeditor.hpp
      include/bit7z/bitarchiveitem.hpp
      include/bit7z/bitarchiveiteminfo.hpp
@@ -91,6 +93,7 @@ set( HEADERS
      src/internal/opencallback.hpp
      src/internal/operationcategory.hpp
      src/internal/operationresult.hpp
+     src/internal/outputterextractcallback.hpp
      src/internal/processeditem.hpp
      src/internal/renameditem.hpp
      src/internal/securetempdir.hpp
@@ -156,6 +159,7 @@ set( SOURCES
      src/internal/opencallback.cpp
      src/internal/operationcategory.cpp
      src/internal/operationresult.cpp
+     src/internal/outputterextractcallback.cpp
      src/internal/processeditem.cpp
      src/internal/renameditem.cpp
      src/internal/securetempdir.cpp
