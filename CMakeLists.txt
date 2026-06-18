@@ -26,6 +26,8 @@ set(
         include/bit7z/bitabstractarchivecreator.hpp
         include/bit7z/bitabstractarchivehandler.hpp
         include/bit7z/bitabstractarchiveopener.hpp
+        include/bit7z/bitabstractarchiveoutput.hpp
+        include/bit7z/bitabstractarchiveoutputter.hpp
         include/bit7z/bitarchiveeditor.hpp
         include/bit7z/bitarchiveitem.hpp
         include/bit7z/bitarchiveiteminfo.hpp
@@ -108,6 +110,7 @@ set(
         src/internal/operationcategory.hpp
         src/internal/operationresult.hpp
         src/internal/optional.hpp
+        src/internal/outputterextractcallback.hpp
         src/internal/processeditem.hpp
         src/internal/rawdataextractcallback.hpp
         src/internal/sequentialextractcallback.hpp
@@ -182,6 +185,7 @@ set(
         src/internal/openerror.cpp
         src/internal/operationcategory.cpp
         src/internal/operationresult.cpp
+        src/internal/outputterextractcallback.cpp
         src/internal/processeditem.cpp
         src/internal/rawdataextractcallback.cpp
         src/internal/sequentialextractcallback.cpp

@@ -4,6 +4,7 @@
 /*
  * bit7z - A C++ static library to interface with the 7-zip shared libraries.
  * Copyright (c) Riccardo Ostani - All Rights Reserved.
+ * Copyright (c) Valery Khadanionak - All Rights Reserved.
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -30,6 +31,7 @@
 #include "internal/opencallback.hpp"
 #include "internal/openerror.hpp"
 #include "internal/operationresult.hpp"
+#include "internal/outputterextractcallback.hpp"
 #include "internal/rawdataextractcallback.hpp"
 #include "internal/sequentialextractcallback.hpp"
 #include "internal/streamextractcallback.hpp"
@@ -905,6 +907,13 @@ void BitInputArchive::extractTo( RawDataCallback callback, BitIndicesView indice
         std::move( callback )
     );
     extractArchive( extractCallback, NAskMode::kExtract, indices );
+}
+
+void BitInputArchive::extractTo(BitAbstractArchiveOutputter& outputter, const std::vector< uint32_t >& indices) const {
+    if (!indices.empty()) {
+        auto extractCallback = bit7z::make_com< OutputterExtractCallback, ExtractCallback >(*this, outputter);
+        extract_arc(mInArchive, indices, extractCallback);
+    }
 }
 
 void BitInputArchive::test( BitIndicesView indices ) const {
