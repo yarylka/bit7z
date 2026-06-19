@@ -11,9 +11,11 @@
  */
 
 #include "internal/outputterextractcallback.hpp"
+
 #include "internal/cbufferoutstream.hpp"
 #include "internal/stringutil.hpp"
 #include "internal/util.hpp"
+#include "internal/fsutil.hpp"
 
 using namespace std;
 using namespace NWindows;
@@ -41,12 +43,13 @@ auto OutputterExtractCallback::finishOperation( OperationResult operationResult 
     return result;
 }
 
-auto OutputterExtractCallback::getOutStream( uint32_t index, ISequentialOutStream** outStream ) -> HRESULT {
-    if ( isItemFolder( index ) ) {
+auto OutputterExtractCallback::getOutStream( const BitArchiveItem& item, ISequentialOutStream** outStream ) -> HRESULT {
+
+    if (item.isDir()) {
         return S_OK;
     }
-
-    const BitPropVariant prop = itemProperty( index, BitProperty::Path );
+    
+    const BitPropVariant prop = item.itemProperty( BitProperty::Path );
     tstring fullPath;
 
     if ( prop.isEmpty() ) {
@@ -54,7 +57,7 @@ auto OutputterExtractCallback::getOutStream( uint32_t index, ISequentialOutStrea
     }
     else if ( prop.isString() ) {
         if ( !mHandler.retainDirectories() ) {
-            fullPath = path_to_tstring( fs::path{ prop.getNativeString() }.filename() );
+            fullPath = pathToTstring( fs::path{ prop.getNativeString() }.filename() );
         }
         else {
             fullPath = prop.getString();
@@ -68,7 +71,7 @@ auto OutputterExtractCallback::getOutStream( uint32_t index, ISequentialOutStrea
     }
 
     BitAbstractArchiveOutput* pOutput = nullptr;
-    const HRESULT hr = m_outputter.GetOutput(index, fullPath, &pOutput);
+    const HRESULT hr = m_outputter.GetOutput(item, fullPath, &pOutput);
     if ( hr != S_OK ) {
         return hr;
     }

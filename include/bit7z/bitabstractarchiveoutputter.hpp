@@ -36,7 +36,7 @@ namespace bit7z
         /**
         * @return pointer to the archive output for the specified archive item
         */
-        virtual auto GetOutput( uint32_t index, const tstring& path, BitAbstractArchiveOutput** ppOutput ) -> HRESULT = 0;
+        virtual auto GetOutput( const BitArchiveItem& item, const tstring& path, BitAbstractArchiveOutput** ppOutput ) -> HRESULT = 0;
 
         /**
         * @brief Set operation result for current archive output

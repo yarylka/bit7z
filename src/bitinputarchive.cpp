@@ -912,7 +912,8 @@ void BitInputArchive::extractTo( RawDataCallback callback, BitIndicesView indice
 void BitInputArchive::extractTo(BitAbstractArchiveOutputter& outputter, const std::vector< uint32_t >& indices) const {
     if (!indices.empty()) {
         auto extractCallback = bit7z::make_com< OutputterExtractCallback, ExtractCallback >(*this, outputter);
-        extract_arc(mInArchive, indices, extractCallback);
+    
+        extractArchive(extractCallback, NAskMode::kExtract, indices);
     }
 }
 
